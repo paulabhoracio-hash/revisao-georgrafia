@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Revisão de Geografia</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{font-family:"Trebuchet MS","Comic Sans MS",Arial,sans-serif;background:linear-gradient(180deg,#5ccaff 0%,#b8ecff 55%,#fff3b0 100%);color:#333;min-height:100vh;overflow-x:hidden}
+.nuvem-flut{position:fixed;background:#fff;border-radius:50px;width:86px;height:44px;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:bold;color:#ff5c9a;box-shadow:0 4px 0 rgba(0,0,0,.07);animation:flutua 7s ease-in-out infinite;z-index:1;pointer-events:none;opacity:.9}
+.nuvem-flut::before,.nuvem-flut::after{content:"";position:absolute;background:#fff;border-radius:50%}
+.nuvem-flut::before{width:44px;height:44px;top:-22px;left:12px}
+.nuvem-flut::after{width:34px;height:34px;top:-16px;right:12px}
+@keyframes flutua{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
+
+.tela{position:relative;z-index:2;display:none;max-width:560px;margin:0 auto;padding:24px 14px 150px;text-align:center}
+.tela.ativa{display:block}
+h1{font-size:clamp(24px,6vw,34px);color:#1d4f91;margin:8px 0 18px;text-shadow:0 2px 0 #fff;line-height:1.25}
+h2{margin:0 0 12px;color:#1d4f91;font-size:clamp(20px,5vw,24px);line-height:1.3}
+.emojis{font-size:36px;letter-spacing:10px;margin:6px 0}
+.card{background:#fff;border-radius:28px;padding:20px;box-shadow:0 8px 0 rgba(0,0,0,.08);margin:14px 0;text-align:left}
+
+input{width:100%;font-size:20px;padding:14px;border:3px solid #5ccaff;border-radius:18px;font-family:inherit;text-align:center;outline:none}
+input:focus{border-color:#ff8a00}
+
+.btn{background:#ff8a00;color:#fff;border:none;border-radius:22px;padding:14px 26px;font-size:20px;font-family:inherit;font-weight:bold;cursor:pointer;box-shadow:0 6px 0 #c95f00;margin:8px 4px;transition:transform .1s}
+.btn:active{transform:translateY(4px);box-shadow:0 2px 0 #c95f00}
+.btn.verde{background:#2ecc71;box-shadow:0 6px 0 #1e8c4d}
+.btn.verde:active{box-shadow:0 2px 0 #1e8c4d}
+
+.barra{height:16px;background:#fff;border-radius:10px;overflow:hidden;margin:4px 0 8px}
+.barra div{height:100%;background:#2ecc71;transition:width .4s}
+
+.opcao{display:block;width:100%;text-align:left;background:#eef8ff;border:3px solid #5ccaff;color:#1d4f91;font-size:19px;padding:14px 16px;border-radius:18px;margin:10px 0;cursor:pointer;font-family:inherit}
+.opcao:hover:not(:disabled){background:#d9f1ff}
+.opcao:disabled{cursor:default}
+.opcao.certa{background:#c8f7d4;border-color:#2ecc71;color:#14622f}
+.opcao.errada{background:#ffd6d6;border-color:#ff5c5c;color:#8a1c1c}
+
+.feedback{margin-top:12px;font-size:20px}
+.teaser{background:#fff7d6;border:3px dashed #ffb300;border-radius:20px;padding:14px;margin:14px 0;font-size:18px;line-height:1.4;text-align:left}
+.teaser b{color:#c46a00}
+
+.cao{width:170px;max-width:55%;display:block;margin:10px auto;transform-origin:50% 100%}
+.pula{animation:pula .9s ease}
+@keyframes pula{0%{transform:translateY(0)}30%{transform:translateY(-70px) rotate(-6deg)}60%{transform:translateY(0) rotate(4deg)}80%{transform:translateY(-20px)}100%{transform:translateY(0)}}
+
+.nota{font-size:84px;color:#ff8a00;font-weight:bold;margin:0;text-shadow:0 4px 0 #fff}
+textarea{width:100%;height:210px;font-size:16px;padding:12px;border:3px solid #5ccaff;border-radius:18px;font-family:inherit;resize:none;color:#333;background:#f7fcff}
+
+.balao{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:#fff;border-radius:60px;padding:12px 36px;font-size:22px;font-weight:bold;color:#ff5c9a;box-shadow:0 6px 0 rgba(0,0,0,.08);z-index:5;white-space:nowrap}
+.balao::before,.balao::after{content:"";position:absolute;background:#fff;border-radius:50%}
+.balao::before{width:40px;height:40px;top:-20px;left:30px}
+.balao::after{width:30px;height:30px;top:-14px;right:30px}
+</style>
+</head>
+<body>
+
+<div class="balao">Geografia</div>
+
+<!-- TELA INICIAL -->
+<section id="inicio" class="tela ativa">
+  <div class="emojis">🗺️🌍🧭📍</div>
+  <h1>Oi, vamos revisar o que aprendemos na escola?</h1>
+  <div class="cao-slot"></div>
+  <div class="card">
+    <p style="margin:0 0 10px;font-size:20px;text-align:center"><b>Qual é o seu nome?</b></p>
+    <input id="nome" type="text" placeholder="Digite seu nome" maxlength="30">
+    <p style="margin:16px 0 10px;font-size:18px;text-align:center"><b>Número de WhatsApp da mãe (com DDD)</b></p>
+    <input id="telefone" type="tel" placeholder="Ex: (67) 99999-9999" maxlength="20">
+    <div style="text-align:center;margin-top:14px">
+      <button class="btn" onclick="iniciar()">Começar! 🚀</button>
+    </div>
+  </div>
+</section>
+
+<!-- TELA DO QUIZ -->
+<section id="quiz" class="tela"></section>
+
+<!-- TELA DO RESULTADO -->
+<section id="resultado" class="tela"></section>
+
+<script>
+const CAO_SVG = `<svg class="cao" viewBox="0 0 200 180" xmlns="http://www.w3.org/2000/svg">
+  <path d="M160 115 Q190 95 180 65" stroke="#d9975b" stroke-width="13" fill="none" stroke-linecap="round"/>
+  <rect x="68" y="138" width="16" height="30" rx="8" fill="#d9975b"/>
+  <rect x="116" y="138" width="16" height="30" rx="8" fill="#d9975b"/>
+  <ellipse cx="100" cy="115" rx="62" ry="40" fill="#d9975b"/>
+  <ellipse cx="88" cy="110" rx="12" ry="8" fill="#f0b879"/>
+  <ellipse cx="62" cy="62" rx="20" ry="36" fill="#8a5a2b" transform="rotate(25 62 62)"/>
+  <ellipse cx="138" cy="62" rx="20" ry="36" fill="#8a5a2b" transform="rotate(-25 138 62)"/>
+  <circle cx="100" cy="76" r="44" fill="#f0b879"/>
+  <circle cx="82" cy="70" r="7" fill="#222"/>
+  <circle cx="118" cy="70" r="7" fill="#222"/>
+  <circle cx="84" cy="68" r="2.5" fill="#fff"/>
+  <circle cx="120" cy="68" r="2.5" fill="#fff"/>
+  <circle cx="72" cy="86" r="6" fill="#ff8fa3" opacity=".7"/>
+  <circle cx="128" cy="86" r="6" fill="#ff8fa3" opacity=".7"/>
+  <ellipse cx="100" cy="88" rx="9" ry="7" fill="#222"/>
+  <path d="M86 98 Q100 112 114 98" stroke="#222" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M94 103 Q100 124 106 103 Z" fill="#ff5c9a"/>
+</svg>`;
+
+const perguntas = [
+  { tema: "pontos de referência", q: "O que é um ponto de referência?",
+    certa: "Algo conhecido que ajuda a encontrar um lugar",
+    erradas: ["Um tipo de animal", "Um planeta do espaço", "Um tipo de comida"],
+    prox: "<b>🗺️ Próximo assunto: MAPAS!</b> Um mapa é um desenho de um lugar visto de cima, como se você estivesse voando de balão." },
+  { tema: "mapas", q: "O que é um mapa?",
+    certa: "Um desenho de um lugar visto de cima",
+    erradas: ["Uma foto de um bichinho", "Um livro de histórias", "Um tipo de sorvete"],
+    prox: "<b>🌍 Próximo assunto: GLOBO TERRESTRE!</b> É uma bola que mostra a Terra inteira, como um planeta de brinquedo." },
+  { tema: "globo terrestre", q: "O que é um globo terrestre?",
+    certa: "Uma bola que representa a Terra",
+    erradas: ["Uma bola de futebol", "Uma nuvem do céu", "Um relógio de parede"],
+    prox: "<b>🧭 Próximo assunto: PONTOS CARDEAIS!</b> São quatro direções que usamos para nos orientar: Norte, Sul, Leste e Oeste." },
+  { tema: "pontos cardeais", q: "Quais são os quatro pontos cardeais?",
+    certa: "Norte, Sul, Leste e Oeste",
+    erradas: ["Azul, verde, rosa e amarelo", "Cima, baixo, frente e trás", "Segunda, terça, quarta e quinta"],
+    prox: "<b>🧲 Próximo assunto: BÚSSOLA!</b> Ela tem uma agulha que sempre aponta para o Norte, e ajuda a descobrir as outras direções." },
+  { tema: "bússola", q: "Para que serve a bússola?",
+    certa: "Para descobrir a direção",
+    erradas: ["Para medir a temperatura", "Para contar as horas", "Para pesar objetos"],
+    prox: "<b>☀️ Próximo assunto: O SOL!</b> Ele aparece sempre na mesma direção de manhã. Você sabe qual é?" },
+  { tema: "direção do nascer do sol", q: "Em que direção o sol costuma nascer?",
+    certa: "No Leste",
+    erradas: ["No Oeste", "No Norte", "No Sul"],
+    prox: "<b>🔑 Próximo assunto: LEGENDA!</b> É a parte do mapa que explica o que significam as cores e os desenhos." },
+  { tema: "legenda do mapa", q: "Para que serve a legenda de um mapa?",
+    certa: "Para explicar os símbolos e as cores",
+    erradas: ["Para dar o nome da cidade", "Para desenhar o mapa", "Para mostrar a data"],
+    prox: "<b>💧 Próximo assunto: CORES DOS MAPAS!</b> Cada cor tem um significado, como os rios e mares, por exemplo." },
+  { tema: "cores dos mapas", q: "Qual cor costuma representar rios e mares nos mapas?",
+    certa: "Azul",
+    erradas: ["Vermelho", "Marrom", "Preto"],
+    prox: "<b>🌊 Próximo assunto: OCEANOS!</b> A Terra tem oceanos enormes. Vamos descobrir qual é o maior deles." },
+  { tema: "oceanos", q: "Qual é o maior oceano do mundo?",
+    certa: "Oceano Pacífico",
+    erradas: ["Oceano Índico", "Oceano Ártico", "Oceano Atlântico"],
+    prox: "<b>🏠 Último desafio: PONTOS DE REFERÊNCIA no dia a dia!</b> Praças, igrejas e mercados ajudam a encontrar o caminho." },
+  { tema: "pontos de referência no dia a dia", q: "Qual destes é um bom ponto de referência para encontrar uma casa?",
+    certa: "Uma praça com um grande chafariz",
+    erradas: ["Uma nuvem no céu", "Um pássaro voando", "Uma folha caindo"],
+    prox: null }
+];
+
+let nome = "", telefone = "", atual = 0, acertos = 0, erros = [], acertou = [];
+
+function mostrarTela(id) {
+  document.querySelectorAll(".tela").forEach(t => t.classList.remove("ativa"));
+  document.getElementById(id).classList.add("ativa");
+  window.scrollTo(0, 0);
+}
+
+function cao() { return CAO_SVG; }
+
+function pular() {
+  document.querySelectorAll(".cao").forEach(c => {
+    c.classList.remove("pula");
+    void c.offsetWidth;
+    c.classList.add("pula");
+  });
+}
+
+function iniciar() {
+  nome = document.getElementById("nome").value.trim();
+  if (!nome) { alert("Escreva o seu nome primeiro!"); return; }
+  telefone = document.getElementById("telefone").value.trim();
+  if (!telefone.replace(/\D/g, "")) { alert("Escreva o número de WhatsApp da mãe, com DDD."); return; }
+  atual = 0; acertos = 0; erros = []; acertou = [];
+  mostrarTela("quiz");
+  renderPergunta();
+}
+
+function renderPergunta() {
+  const p = perguntas[atual];
+  const opts = [p.certa, ...p.erradas].sort(() => Math.random() - 0.5);
+  const quiz = document.getElementById("quiz");
+  quiz.innerHTML = `
+    <div class="barra"><div style="width:${(atual / 10) * 100}%"></div></div>
+    <p style="font-weight:bold;color:#1d4f91;margin:6px 0">Pergunta ${atual + 1} de 10</p>
+    ${cao()}
+    <div class="card">
+      <h2>${p.q}</h2>
+      <div id="opcoes"></div>
+      <div id="fb"></div>
+    </div>`;
+  const box = document.getElementById("opcoes");
+  opts.forEach(o => {
+    const b = document.createElement("button");
+    b.className = "opcao";
+    b.textContent = o;
+    b.onclick = () => responder(o, b);
+    box.appendChild(b);
+  });
+  window.scrollTo(0, 0);
+}
+
+function responder(escolha, btn) {
+  const p = perguntas[atual];
+  const botoes = document.querySelectorAll(".opcao");
+  botoes.forEach(b => b.disabled = true);
+  const certo = escolha === p.certa;
+  let msg;
+  if (certo) {
+    acertos++;
+    acertou.push(p.tema);
+    btn.classList.add("certa");
+    msg = "🎉 Isso mesmo! Muito bem!";
+  } else {
+    erros.push(p.tema);
+    btn.classList.add("errada");
+    botoes.forEach(b => { if (b.textContent === p.certa) b.classList.add("certa"); });
+    msg = "😉 Quase lá! A resposta certa era: " + p.certa;
+  }
+  const teaser = p.prox ? `<div class="teaser">${p.prox}</div>` : "";
+  document.getElementById("fb").innerHTML = `
+    <div class="feedback">
+      <p><b>${msg}</b></p>
+      ${teaser}
+      <button class="btn verde" id="prox">${atual < 9 ? "Próxima pergunta ➡️" : "Ver minha nota 🏆"}</button>
+    </div>`;
+  document.getElementById("prox").onclick = avancar;
+  pular();
+}
+
+function avancar() {
+  if (atual < 9) {
+    atual++;
+    renderPergunta();
+  } else {
+    mostrarResultado();
+  }
+}
+
+function mostrarResultado() {
+  const nota = acertos;
+  let frase;
+  if (nota === 10) frase = "Uau, que incrível! Você é um craque da Geografia!";
+  else if (nota >= 6) frase = "Muito bem! Você aprendeu bastante!";
+  else frase = "Bom começo! Vamos revisar juntos mais uma vez!";
+
+  let rel = `Relatório de Geografia\nAluno(a): ${nome}\nNota: ${nota}/10\n\n`;
+  if (erros.length === 0) {
+    rel += `Elogios: Parabéns, ${nome}! Você acertou todas as perguntas. Excelente trabalho, continue assim!`;
+  } else {
+    const melhorar = [...new Set(erros)].join(", ");
+    rel += `Pontos a melhorar: ${melhorar}.\n`;
+    const elogios = [...new Set(acertou)].join(", ");
+    rel += `Elogios: ${acertou.length ? "Você foi muito bem em " + elogios + ". " : ""}Continue estudando, você está no caminho certo!`;
+  }
+
+  const res = document.getElementById("resultado");
+  res.innerHTML = `
+    <h1>Fim da revisão! 🎈</h1>
+    ${cao()}
+    <p class="nota">${nota}/10</p>
+    <p style="font-size:22px;font-weight:bold;color:#1d4f91">${frase}</p>
+    <div class="card">
+      <p style="margin:0 0 8px;font-weight:bold;color:#1d4f91">Relatório para a escola e para a família:</p>
+      <textarea id="relatorio" readonly>${rel}</textarea>
+      <div style="text-align:center;margin-top:10px">
+        ${linkWhats(rel)}
+        <button class="btn verde" onclick="copiar()">Copiar relatório 📋</button>
+        <button class="btn" onclick="voltar()">Jogar de novo 🔄</button>
+      </div>
+    </div>`;
+  mostrarTela("resultado");
+  pular();
+}
+
+function linkWhats(texto) {
+  let num = telefone.replace(/\D/g, "");
+  if (!num) return "";
+  if (num.length <= 11) num = "55" + num;
+  return `<a class="btn verde" target="_blank" rel="noopener" href="https://wa.me/${num}?text=${encodeURIComponent(texto)}">Enviar pelo WhatsApp 💬</a>`;
+}
+
+function copiar() {
+  const ta = document.getElementById("relatorio");
+  ta.select();
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(ta.value)
+      .then(() => alert("Relatório copiado!"))
+      .catch(() => { document.execCommand("copy"); alert("Relatório copiado!"); });
+  } else {
+    document.execCommand("copy");
+    alert("Relatório copiado!");
+  }
+}
+
+function voltar() {
+  document.getElementById("nome").value = "";
+  mostrarTela("inicio");
+}
+
+// Preenche o cachorro na tela inicial e cria nuvens com letras flutuando
+document.querySelector("#inicio .cao-slot").innerHTML = cao();
+
+const letras = ["G","E","O","M","A","P","N","S","L","B","R","I","C","T"];
+for (let i = 0; i < 12; i++) {
+  const n = document.createElement("div");
+  n.className = "nuvem-flut";
+  n.textContent = letras[i % letras.length];
+  n.style.left = (Math.random() * 88) + "vw";
+  n.style.top = (8 + Math.random() * 75) + "vh";
+  n.style.animationDelay = (-Math.random() * 7) + "s";
+  n.style.transform = `scale(${0.7 + Math.random() * 0.5})`;
+  document.body.appendChild(n);
+}
+</script>
+</body>
+</html>
